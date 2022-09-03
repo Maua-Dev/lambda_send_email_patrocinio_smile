@@ -1,32 +1,42 @@
 import boto3
 from botocore.exceptions import ClientError
 import json
+import os
 from generate_html import generate_html
 
 def lambda_handler(event, context):
-    name = event['name']
+    company_name = event['company_name']
+    colab_name = event['colab_name']
+    email = event['email']
+    number = event['number']
+    cnpj = event['cnpj']
+    sponsor_type = event['sponsor_type']
+    closure_date = event['closure_date']
+    
     # Replace sender@example.com with your "From" address.
     # This address must be verified with Amazon SES.
-    SENDER = "dev@maua.br"
+    SENDER = os.environ["SENDER"]
     
     # Replace recipient@example.com with a "To" address. If your account 
     # is still in the sandbox, this address must be verified.
-    RECIPIENT = "caiobbgtoledo@gmail.com"
-    
-    # Specify a configuration set. If you do not want to use a configuration
-    # set, comment the following variable, and the 
-    # ConfigurationSetName=CONFIGURATION_SET argument below.
-    
-    # CONFIGURATION_SET = "ConfigSet"
+    RECIPIENT = os.environ["RECIPIENT"]
     
     # If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
-    AWS_REGION = "sa-east-1"
+    AWS_REGION = os.environ["REGION"]
     
     # The subject line for the email.
-    SUBJECT = "Amazon SES Test (SDK for Python)"
+    SUBJECT = f"Interesse de patrocínio - {company_name}"
                     
     # The HTML body of the email.
-    BODY_HTML = generate_html(name)     
+    BODY_HTML = generate_html(
+        company_name = company_name,
+        colab_name = colab_name,
+        email = email,
+        number = number,
+        cnpj = cnpj,
+        sponsor_type = sponsor_type,
+        closure_date = closure_date
+        )     
     
     # The character encoding for the email.
     CHARSET = "UTF-8"
