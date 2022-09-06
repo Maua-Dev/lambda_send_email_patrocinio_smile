@@ -5,13 +5,13 @@ import os
 from generate_html import generate_html
 
 def lambda_handler(event, context):
-    company_name = event['company_name']
-    colab_name = event['colab_name']
-    email = event['email']
-    number = event['number']
-    cnpj = event['cnpj']
-    sponsor_type = event['sponsor_type']
-    closure_date = event['closure_date']
+    company_name = json.loads(event['body'])['company_name']
+    colab_name = json.loads(event['body'])['colab_name']
+    email = json.loads(event['body'])['email']
+    number = json.loads(event['body'])['number']
+    cnpj = json.loads(event['body'])['cnpj']
+    sponsor_type = json.loads(event['body'])['sponsor_type']
+    closure_date = json.loads(event['body'])['closure_date']
     
     # Replace sender@example.com with your "From" address.
     # This address must be verified with Amazon SES.
